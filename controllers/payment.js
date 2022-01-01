@@ -5,23 +5,14 @@ const calculateOrderAmount = (shipping_fee, total_amount) => {
 };
 
 const paymentController = async (req, res) => {
-  const { cart, shipping_fee, total_amount } = req.body;
+  const { cart, shipping_fee, total_amount, shipping } = req.body;
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: calculateOrderAmount(shipping_fee, total_amount),
-      currency: 'usd',
+      currency: 'inr',
       description: 'Paying for shopping',
-      shipping: {
-        name: 'Varun Tiwari',
-        address: {
-          line1: '510 Townsend St',
-          postal_code: '98140',
-          city: 'San Francisco',
-          state: 'CA',
-          country: 'US',
-        },
-      },
+      shipping,
     });
     return res.status(200).json({
       clientSecret: paymentIntent.client_secret,
