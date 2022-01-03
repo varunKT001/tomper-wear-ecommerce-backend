@@ -2,13 +2,13 @@ const router = require('express').Router();
 
 const productController = require('../controllers/productController');
 
-// GET ALL PRODUCTS
+// send all product detaisl
 router.route('/').get(productController.getAllProducts);
 
-// CREATE NEW PRODUCT
+// create a new product
 router.route('/new').post(productController.createProduct);
 
-// GET, UPDATE, DELETE A EXISTING PRODUCT
+// send, update, delete a single product
 router
   .route('/:id')
   .get(productController.getSingleProduct)
