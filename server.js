@@ -1,13 +1,18 @@
 // load env-vars
 require('dotenv').config();
 
+// requiring dependencies
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+// initialize express
 const app = express();
 
 // requiring routers
 const paymentRouter = require('./routes/paymentRouter');
 const productRouter = require('./routes/productRouter');
+const adminRouter = require('./routes/adminRouter');
 
 // requiring middlewares
 const errorMiddleware = require('./middleware/Error');
@@ -27,11 +32,13 @@ connectToDb();
 
 // using middlewares
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 
 // using routers
 app.use('/api/payment', paymentRouter);
 app.use('/api/products', productRouter);
+app.use('/api/admin', adminRouter);
 
 // using other middlewares
 app.use(errorMiddleware);
