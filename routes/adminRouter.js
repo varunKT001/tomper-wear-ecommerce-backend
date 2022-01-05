@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const adminController = require('../controllers/adminController');
 const productController = require('../controllers/productController');
+const orderController = require('../controllers/orderController');
 
 const auth = require('../middleware/Auth');
 
@@ -41,5 +42,16 @@ router
 router
   .route('/product/review/:id')
   .delete(auth.checkUserAuthentication, productController.deleteReview);
+
+// send all orders
+router
+  .route('/orders')
+  .get(auth.checkUserAuthentication, orderController.getAllOrders);
+
+// send single order
+router
+  .route('/order/:id')
+  .put(auth.checkUserAuthentication, orderController.updateOrderStatus)
+  .delete(auth.checkUserAuthentication, orderController.deleteOrder);
 
 module.exports = router;
