@@ -37,4 +37,9 @@ router
   .put(auth.checkUserAuthentication, productController.updateProduct)
   .delete(auth.checkUserAuthentication, productController.deleteProduct);
 
+// delete product reviews
+router
+  .route('/product/review/:id')
+  .delete(auth.checkUserAuthentication, productController.deleteReview);
+
 module.exports = router;
