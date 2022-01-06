@@ -6,7 +6,7 @@ const orderController = require('../controllers/orderController');
 router.route('/new').post(orderController.createNewOrder);
 
 // send user orders
-router.route('/').get(orderController.getUserOrders);
+router.route('/').post(orderController.getUserOrders);
 
 // send single order
 router.route('/:id').get(orderController.getSingleOrder);

@@ -79,6 +79,10 @@ const productSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  featured: {
+    type: Boolean,
+    default: false,
+  },
   admin: {
     type: mongoose.Schema.ObjectId,
     ref: 'Admin',

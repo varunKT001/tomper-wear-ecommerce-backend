@@ -45,6 +45,10 @@ const orderSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+      color: {
+        type: String,
+        required: true,
+      },
       product: {
         type: mongoose.Schema.ObjectId,
         ref: 'Product',
@@ -77,11 +81,6 @@ const orderSchema = mongoose.Schema({
     required: true,
   },
   itemsPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  taxPrice: {
     type: Number,
     required: true,
     default: 0,
