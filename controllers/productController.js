@@ -61,6 +61,7 @@ exports.getAllProducts = catchAsyncError(async (req, res) => {
       company,
       description,
       category,
+      stock,
       shipping,
     } = item;
     const newItem = {
@@ -72,6 +73,7 @@ exports.getAllProducts = catchAsyncError(async (req, res) => {
       company,
       description,
       category,
+      stock,
       shipping,
     };
     return newItem;

@@ -16,6 +16,10 @@ const adminSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, 'Please enter a valid email'],
   },
+  privilege: {
+    type: String,
+    default: 'low',
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],

@@ -1,16 +1,18 @@
 const Admin = require('../models/adminModel');
+const jwt = require('jsonwebtoken');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncError = require('../middleware/CatchAsyncErrors');
 const { sendToken } = require('../utils/jwt');
 
 exports.registerAdmin = catchAsyncError(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, privilege } = req.body;
   if (!name || !email || !password) {
     return next(new ErrorHandler('Missing fields', 400));
   }
   const admin = await Admin.create({
     name,
     email,
+    privilege,
     password,
   });
   sendToken(admin, 200, res);
@@ -32,17 +34,6 @@ exports.loginAdmin = catchAsyncError(async (req, res, next) => {
   sendToken(admin, 200, res);
 });
 
-exports.logoutAdmin = catchAsyncError(async (req, res, next) => {
-  res.cookie('token', null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-  });
-  res.status(200).json({
-    success: true,
-    message: 'Logged out',
-  });
-});
-
 exports.getAllAdminDetails = catchAsyncError(async (req, res, next) => {
   const admin = await Admin.find();
   const adminData = admin.map((item) => {
@@ -50,6 +41,7 @@ exports.getAllAdminDetails = catchAsyncError(async (req, res, next) => {
       id: item._id,
       name: item.name,
       email: item.email,
+      privilege: item.privilege,
     };
   });
   res.status(200).json({
@@ -75,4 +67,17 @@ exports.getSingleAdminDetails = catchAsyncError(async (req, res, next) => {
     success: true,
     data: adminData,
   });
+});
+
+exports.sendCurrentUser = catchAsyncError(async (req, res, next) => {
+  const { token } = req.body;
+  if (!token) {
+    return next(new ErrorHandler('User not found', 400));
+  }
+  const decodedData = await jwt.verify(token, process.env.JWT_SECRET);
+  const admin = await Admin.findById(decodedData.id);
+  if (!admin) {
+    new ErrorHandler('User not found', 401);
+  }
+  sendToken(admin, 200, res);
 });

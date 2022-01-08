@@ -32,9 +32,9 @@ process.on('uncaughtException', (err) => {
 connectToDb();
 
 // using middlewares
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
 // using routers
 app.use('/api/payment', paymentRouter);
