@@ -89,9 +89,21 @@ exports.updateOrderStatus = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler('You have already delivered this order', 400));
   }
   if (req.body.status === 'confirmed') {
-    order.orderItems.forEach(async (ord) => {
-      await updateStock(ord.product, ord.quantity);
-    });
+    let successCount = 0;
+    let failureCount = 0;
+    let orderLength = order.orderItems.length;
+    for (let index = 0; index < orderLength; index++) {
+      const item = order.orderItems[index];
+      let success = await updateStock(item.product, item.quantity);
+      if (success) {
+        successCount += 1;
+      } else {
+        failureCount += 1;
+      }
+    }
+    if (failureCount > 0) {
+      return next(new ErrorHandler('Product out of stock', 400));
+    }
   }
   order.orderStatus = req.body.status;
   if (req.body.status === 'delivered') {
@@ -122,6 +134,10 @@ exports.deleteOrder = catchAsyncError(async (req, res, next) => {
 
 const updateStock = async (id, quantity) => {
   const product = await Product.findById(id);
+  if (product.stock < quantity) {
+    return false;
+  }
   product.stock -= quantity;
   await product.save({ validateBeforeSave: false });
+  return true;
 };

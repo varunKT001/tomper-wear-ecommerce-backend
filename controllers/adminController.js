@@ -81,3 +81,47 @@ exports.sendCurrentUser = catchAsyncError(async (req, res, next) => {
   }
   sendToken(admin, 200, res);
 });
+
+exports.updateAdminPrivilege = catchAsyncError(async (req, res, next) => {
+  const { privilege } = req.body;
+  if (!req.params.id) {
+    return next(new ErrorHandler('User not found', 400));
+  }
+  if (!privilege) {
+    return next(new ErrorHandler('Invalid: no data provided', 400));
+  }
+  if (!['super', 'moderate', 'low'].includes(privilege)) {
+    return next(new ErrorHandler('Invalid: data invalid', 400));
+  }
+  const admin = await Admin.findById(req.params.id);
+  if (!admin) {
+    return next(new ErrorHandler('User not found', 200));
+  }
+  if (admin.email === req.user.email) {
+    return next(new ErrorHandler('Cannot change privilege for self', 400));
+  }
+  admin.privilege = privilege;
+  await admin.save();
+  res.status(200).json({
+    success: true,
+    data: admin,
+  });
+});
+
+exports.deleteAdmin = catchAsyncError(async (req, res, next) => {
+  if (!req.params.id) {
+    return next(new ErrorHandler('User not found', 400));
+  }
+  const admin = await Admin.findById(req.params.id);
+  if (!admin) {
+    return next(new ErrorHandler('User not found', 200));
+  }
+  if (admin.email === req.user.email) {
+    return next(new ErrorHandler('Cannot delete self', 400));
+  }
+  await admin.remove();
+  res.status(200).json({
+    success: true,
+    message: 'Admin deleted',
+  });
+});

@@ -36,6 +36,16 @@ router
     auth.checkUserAuthentication,
     auth.checkAdminPrivileges('super'),
     adminController.getSingleAdminDetails
+  )
+  .put(
+    auth.checkUserAuthentication,
+    auth.checkAdminPrivileges('super'),
+    adminController.updateAdminPrivilege
+  )
+  .delete(
+    auth.checkUserAuthentication,
+    auth.checkAdminPrivileges('super'),
+    adminController.deleteAdmin
   );
 
 // create a new product
