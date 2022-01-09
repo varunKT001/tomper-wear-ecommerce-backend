@@ -36,6 +36,7 @@ const productSchema = mongoose.Schema({
       required: true,
     },
   ],
+  sizes: [{ type: String, required: true }],
   company: {
     type: String,
     required: [true, 'Please enter product company'],
