@@ -48,6 +48,15 @@ router
     adminController.deleteAdmin
   );
 
+// upload product images
+router
+  .route('/product/upload')
+  .post(
+    auth.checkUserAuthentication,
+    auth.checkAdminPrivileges('super', 'moderate'),
+    productController.uploadImages
+  );
+
 // create a new product
 router
   .route('/product/new')

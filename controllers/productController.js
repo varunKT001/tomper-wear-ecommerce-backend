@@ -1,6 +1,7 @@
 const Product = require('../models/productModel');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncError = require('../middleware/CatchAsyncErrors');
+const cloudinary = require('../config/cloudinary');
 
 // create a new product
 exports.createProduct = catchAsyncError(async (req, res, next) => {
@@ -8,7 +9,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
   const product = await Product.create(req.body);
   res.status(200).json({
     success: true,
-    product,
+    data: product,
   });
 });
 
@@ -41,6 +42,9 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler('Product Not Found', 200));
   }
+  for (let i = 0; i < product.images.length; i++) {
+    await cloudinary.uploader.destroy(product.images[i].public_id);
+  }
   await product.remove();
   res.status(200).json({
     success: true,
@@ -63,6 +67,7 @@ exports.getAllProducts = catchAsyncError(async (req, res) => {
       category,
       stock,
       shipping,
+      featured,
     } = item;
     const newItem = {
       id,
@@ -75,6 +80,7 @@ exports.getAllProducts = catchAsyncError(async (req, res) => {
       category,
       stock,
       shipping,
+      featured,
     };
     return newItem;
   });
@@ -199,5 +205,27 @@ exports.deleteReview = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: 'Review deleted',
+  });
+});
+
+// upload product images
+exports.uploadImages = catchAsyncError(async (req, res, next) => {
+  const { images } = req.body;
+  let promises = [];
+  images.forEach((image) => {
+    promises.push(
+      cloudinary.uploader.upload(image, {
+        folder: 'tomper-wear',
+      })
+    );
+  });
+  const response = await Promise.all(promises);
+  const data = response.map((item) => {
+    const { public_id, secure_url: url } = item;
+    return { public_id, url };
+  });
+  res.status(200).json({
+    success: true,
+    data,
   });
 });
