@@ -31,16 +31,17 @@ exports.updateProduct = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler('Product Not Found', 200));
   }
-  for (let i = 0; i < product.images.length; i++) {
-    await cloudinary.uploader.destroy(product.images[i].public_id);
-  }
   let images = req.body.images;
   let newImages = [];
   for (let i = 0; i < images.length; i++) {
-    const { public_id, url } = await cloudinary.uploader.upload(images[i], {
-      folder: 'tomper-wear',
-    });
-    newImages.push({ public_id, url });
+    if (typeof images[i] === 'string') {
+      const { public_id, url } = await cloudinary.uploader.upload(images[i], {
+        folder: 'tomper-wear',
+      });
+      newImages.push({ public_id, url });
+    } else {
+      newImages.push(images[i]);
+    }
   }
   req.body.images = [...newImages];
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
