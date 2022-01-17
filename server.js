@@ -14,6 +14,7 @@ const paymentRouter = require('./routes/paymentRouter');
 const productRouter = require('./routes/productRouter');
 const adminRouter = require('./routes/adminRouter');
 const orderRouter = require('./routes/orderRouter');
+const uploadRouter = require('./routes/uploadRouter');
 
 // requiring middlewares
 const errorMiddleware = require('./middleware/Error');
@@ -39,14 +40,12 @@ app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(cookieParser());
 
-// using pre-flight request options
-// app.options('*', cors());
-
 // using routers
 app.use('/api/payment', paymentRouter);
 app.use('/api/products', productRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/upload', uploadRouter);
 
 // using other middlewares
 app.use(errorMiddleware);
