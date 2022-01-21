@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const Admin = require('../models/adminModel');
 
 exports.checkUserAuthentication = catchAsyncErrors(async (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1];
+  const { token } = req.cookies;
   if (!token) {
     return next(
       new ErrorHandler('Please login again to access this resource', 401)

@@ -20,6 +20,9 @@ router
 // login admin
 router.route('/login').post(adminController.loginAdmin);
 
+// logout admin
+router.route('/logout').get(adminController.logoutAdmin);
+
 // get all admin details
 router
   .route('/users')

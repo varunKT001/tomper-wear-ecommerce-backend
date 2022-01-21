@@ -15,7 +15,15 @@ exports.registerAdmin = catchAsyncError(async (req, res, next) => {
     privilege,
     password,
   });
-  sendToken(admin, 200, res);
+  res.status(200).json({
+    success: true,
+    data: {
+      id: admin._id,
+      name: admin.name,
+      email: admin.email,
+      privilege: admin.privilege,
+    },
+  });
 });
 
 exports.loginAdmin = catchAsyncError(async (req, res, next) => {
@@ -32,6 +40,17 @@ exports.loginAdmin = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler('Invalid email or password', 401));
   }
   sendToken(admin, 200, res);
+});
+
+exports.logoutAdmin = catchAsyncError(async (req, res, next) => {
+  res.cookie('token', null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: 'Logged Out',
+  });
 });
 
 exports.getAllAdminDetails = catchAsyncError(async (req, res, next) => {
@@ -70,7 +89,7 @@ exports.getSingleAdminDetails = catchAsyncError(async (req, res, next) => {
 });
 
 exports.sendCurrentUser = catchAsyncError(async (req, res, next) => {
-  const { token } = req.body;
+  const { token } = req.cookies;
   if (!token) {
     return next(new ErrorHandler('User not found', 400));
   }
