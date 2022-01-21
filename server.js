@@ -38,7 +38,7 @@ connectToDb();
 // using middlewares
 app.use(
   cors({
-    origin: process.env.FRONTEND_HOST,
+    origin: [process.env.FRONTEND_HOST, process.env.ADMIN_FRONTEND_HOST],
     credentials: true,
   })
 );
