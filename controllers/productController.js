@@ -148,6 +148,7 @@ exports.createProductReview = catchAsyncError(async (req, res, next) => {
   if (isReviewed) {
     product.reviews.forEach((rev) => {
       if (rev.email === email) {
+        rev.name = name;
         rev.rating = rating;
         rev.comment = comment;
       }
