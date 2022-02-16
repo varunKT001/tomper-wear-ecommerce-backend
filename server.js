@@ -45,6 +45,14 @@ app.use(
 app.use(express.json({ limit: '20mb' }));
 app.use(cookieParser());
 
+// basic api route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'API service running 🚀',
+  });
+});
+
 // using routers
 app.use('/api/payment', paymentRouter);
 app.use('/api/products', productRouter);

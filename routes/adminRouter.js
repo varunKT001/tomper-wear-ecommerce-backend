@@ -102,7 +102,7 @@ router
   )
   .delete(
     auth.checkUserAuthentication,
-    auth.checkAdminPrivileges('moderate', 'super', 'low'),
+    auth.checkAdminPrivileges('moderate', 'super'),
     orderController.deleteOrder
   );
 
