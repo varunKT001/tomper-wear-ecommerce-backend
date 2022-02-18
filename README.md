@@ -16,6 +16,8 @@ This is the backend of TomperWear build with MERN stack and deployed with <a hre
 
 ## 🚀 Link to [Client](https://github.com/varunKT001/tomper-wear-ecommerce), [Admin panel](https://github.com/varunKT001/tomper-wear-ecommerce-admin)
 
+## 📷 Link to [Video demo](https://youtu.be/5oGqxtSN0jY)
+
 ## 💾 Database schemas
 
 #### Admin schema
