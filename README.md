@@ -286,6 +286,23 @@ This is privilege is ideal for the delivery-agent(s).
    npm start
    ```
 
+## 🤝 Test user credentials
+
+#### Client
+
+| **E-mail**          | **Password** |
+| ------------------- | ------------ |
+| bob@tomperwear.com  | bob1212      |
+| test@tomperwear.com | test1212     |
+
+#### Admin
+
+| **Username**  | **E-mail**                   | **Password**     |
+| ------------- | ---------------------------- | ---------------- |
+| Test Super    | test.super@tomperwear.com    | testsuper1212    |
+| Test Moderate | test.moderate@tomperwear.com | testmoderate1212 |
+| Test Low      | test.low@tomperwear.com      | testlow1212      |
+
 ## 😎 Team Members
 
 1. Varun Kumar Tiwar - 2020IMT-112
