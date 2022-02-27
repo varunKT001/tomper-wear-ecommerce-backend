@@ -38,7 +38,7 @@ connectToDb();
 // using middlewares
 app.use(
   cors({
-    origin: [process.env.FRONTEND_HOST, process.env.ADMIN_FRONTEND_HOST],
+    origin: [/netlify\.app$/, /localhost:\d{4}$/],
     credentials: true,
   })
 );
