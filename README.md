@@ -273,8 +273,6 @@ This is privilege is ideal for the delivery-agent(s).
    JWT_SECRET=<your_jwt_secret>
    JWT_EXPIRE=5d
    COOKIE_EXPIRE=5
-   FRONTEND_HOST=<client_url>
-   ADMIN_FRONTEND_HOST=<admin_url>
    CLOUDINARY_CLOUD_NAME=<cloudinary_cloud_name>
    CLOUDINARY_API_KEY=<cloudinary_api_key>
    CLOUDINARY_API_SECRET=<cloudinary_api_secret>
