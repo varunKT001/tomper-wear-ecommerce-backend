@@ -5,13 +5,13 @@
 <b>E-commerce web-application for selling clothing essentials</b>
 </p>
 <p align='center'>
-<a href='https://tomper-wear-server.herokuapp.com' target='_blank'>tomper-wear-server.herokuapp.com</a>
+<a href='https://tomper-wear-server.onrender.com' target='_blank'>tomper-wear-server.onrender.com</a>
 </p>
 
 ---
 
 <p align='center'>
-This is the backend of TomperWear build with MERN stack and deployed with <a href='https://www.heroku.com/' target='_blank'>Heroku</a>
+This is the backend of TomperWear build with MERN stack and deployed with <a href='https://www.render.com/' target='_blank'>Render</a>
 </p>
 
 ## 🚀 Link to [Client](https://github.com/varunKT001/tomper-wear-ecommerce), [Admin panel](https://github.com/varunKT001/tomper-wear-ecommerce-admin)
