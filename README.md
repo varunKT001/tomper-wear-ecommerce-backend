@@ -5,7 +5,9 @@
 <b>E-commerce web-application for selling clothing essentials</b>
 </p>
 <p align='center'>
-<a href='https://tomper-wear-server.onrender.com' target='_blank'>tomper-wear-server.onrender.com</a>
+<a href='https://tomper-wear-server.onrender.com' target='_blank'>tomper-wear-server.onrender.com</a> (cloud-based)
+<br/>
+<a href='https://tw-backend.varuntiwari.com' target='_blank'>tw-backend.varuntiwari.com</a> (self-hosted)
 </p>
 
 ---
